@@ -1,0 +1,16 @@
+name: CratesPlus
+description: ${project.description}
+main: plus.crates.CratesPlus
+version: update-v2.0.1
+api-version: 1.13
+author: Geoorloofd,Verdedigd,ConnectedDino,GamenMetShane
+depend: [DecentHolograms]
+commands:
+  crate:
+    description: Main CratesPlus command
+    aliases: [cratesplus,crates]
+permissions:
+  cratesplus.admin:
+    default: op
+  cratesplus.updates:
+    default: op
