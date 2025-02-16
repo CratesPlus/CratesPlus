@@ -154,6 +154,7 @@ public class CrateColor extends Menu {
                     }
         }
         data.saveConfig();
+        data.reloadConfig();
         List<Location> crateLocation = crateLocations.getCrateLocations(crateName);
         if (crateLocation.isEmpty()) {
             return;

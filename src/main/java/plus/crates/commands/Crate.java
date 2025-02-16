@@ -72,10 +72,7 @@ public class Crate implements CommandExecutor, TabCompleter {
                          }
                      } else if (args[0].equalsIgnoreCase("settings")) {
                          new Crates(CratesPlus.getPlayerMenuUtility(player), plugin).open();
-                     } else if (args[0].equalsIgnoreCase("reload")) {
-                         CratesPlus.getInstance().reloadCratesConfig();
-                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("ReloadedConfig")));
-                     } else if (args[0].equalsIgnoreCase("rename")) {
+                     }  else if (args[0].equalsIgnoreCase("rename")) {
                          if (args.length > 2) {
                              String oldName = args[1];
                              String newName = args[2];
@@ -281,7 +278,6 @@ public class Crate implements CommandExecutor, TabCompleter {
                     }
                 } else {
                      player.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " ----- CratePlus " + plugin.getDescription().getVersion() + " Help -----");
-                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate reload " + ChatColor.YELLOW + "Reload configuration for CratesPlus");
                      player.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate settings " + ChatColor.YELLOW + "Edit settings of CratesPlus and crate winnings");
                      player.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate create <name> " + ChatColor.YELLOW + "Create a new crate");
                      player.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate rename <old name> <new name> " + ChatColor.YELLOW + "Rename a crate");
@@ -311,7 +307,6 @@ public class Crate implements CommandExecutor, TabCompleter {
             options.add("key");
             options.add("keyall");
             options.add("settings");
-            options.add("reload");
             options.add("rename");
             options.add("delete");
         }
