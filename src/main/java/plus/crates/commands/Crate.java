@@ -42,8 +42,7 @@ public class Crate implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player player) {
-            if (player.hasPermission("cratesplus.admin")) {
+            if (sender.hasPermission("cratesplus.admin")) {
                  if (args.length > 0) {
                      if (args[0].equalsIgnoreCase("create")) {
                          if (args.length > 1) {
@@ -63,15 +62,15 @@ public class Crate implements CommandExecutor, TabCompleter {
                                  data.saveConfig();
                                  data.reloadConfig();
 
-                                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("SuccessAdded").replace("%cratename%", crateName)));
+                                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("SuccessAdded").replace("%cratename%", crateName)));
                              } else {
-                                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("AlreadyExists")));
+                                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("AlreadyExists")));
                              }
                          } else {
-                             player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("ArgumentRequired") + ChatColor.RESET + " /crate create <name>"));
+                             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("ArgumentRequired") + ChatColor.RESET + " /crate create <name>"));
                          }
                      } else if (args[0].equalsIgnoreCase("settings")) {
-                         new Crates(CratesPlus.getPlayerMenuUtility(player), plugin).open();
+                         new Crates(CratesPlus.getPlayerMenuUtility((Player) sender), plugin).open();
                      }  else if (args[0].equalsIgnoreCase("rename")) {
                          if (args.length > 2) {
                              String oldName = args[1];
@@ -79,7 +78,7 @@ public class Crate implements CommandExecutor, TabCompleter {
 
                              data.reloadConfig();
                              if (data.getConfig().get(oldName + ".color") == null) {
-                                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("NoName")));
+                                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("NoName")));
                              } else {
                                  // Get all the data
                                  data.reloadConfig();
@@ -96,10 +95,10 @@ public class Crate implements CommandExecutor, TabCompleter {
                                  data.getConfig().set(newName + ".chances", chances);
                                  data.saveConfig();
 
-                                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("RenameCrateSuccess").replace("%oldname%", oldName).replace("%newname%", newName)));
+                                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("RenameCrateSuccess").replace("%oldname%", oldName).replace("%newname%", newName)));
                              }
                          } else {
-                             player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("ArgumentRequired") + ChatColor.RESET + " /crate rename <old> <new>"));
+                             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("ArgumentRequired") + ChatColor.RESET + " /crate rename <old> <new>"));
                          }
                      } else if (args[0].equalsIgnoreCase("delete")) {
                          if (args.length > 1) {
@@ -109,15 +108,15 @@ public class Crate implements CommandExecutor, TabCompleter {
                              if (data.getConfig().get(crateName + ".color") != null) {
                                  String color = data.getConfig().getString(crateName + ".color");
 
-                                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("SuccessDeleteCrate").replace("%cratename%", crateName).replace("%cratecolor%", color)));
+                                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("SuccessDeleteCrate").replace("%cratename%", crateName).replace("%cratecolor%", color)));
                                  data.getConfig().set(crateName, null);
                                  data.saveConfig();
                                  data.reloadConfig();
                              } else {
-                                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("NoCrate")));
+                                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("NoCrate")));
                              }
                          } else {
-                             player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("ArgumentRequired") + ChatColor.RESET + " /crate Delete <name>"));
+                             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("ArgumentRequired") + ChatColor.RESET + " /crate Delete <name>"));
                          }
                      } else if (args[0].equalsIgnoreCase("crate")) {
                          if (args.length > 2) {
@@ -132,13 +131,13 @@ public class Crate implements CommandExecutor, TabCompleter {
 
                                      target.getInventory().addItem(crate);
 
-                                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("CrateGiven").replace("%cratename%", crateName)));
+                                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("CrateGiven").replace("%cratename%", crateName)));
                                      target.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("PlayerCrateGiven").replace("%cratecolor%", color).replace("%cratename%", crateName)));
                                  } else {
-                                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("InvalidUser")));
+                                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("InvalidUser")));
                                  }
                              } else {
-                                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("NoCrate")));
+                                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("NoCrate")));
                              }
                          } else if (args.length > 1) {
                              String crateName = args[1];
@@ -147,14 +146,15 @@ public class Crate implements CommandExecutor, TabCompleter {
                              if (data.getConfig().get(crateName + ".color") != null) {
                                  ItemStack crate = CreateCrate(crateName);
                                  String color = data.getConfig().getString(crateName + ".color");
-
+                                 if (sender instanceof Player player) {
                                  player.getInventory().addItem(crate);
                                  player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("PlayerCrateGiven").replace("%cratecolor%", color).replace("%cratename%", crateName)));
+                             }
                              } else {
-                                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("NoCrate")));
+                                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("NoCrate")));
                              }
                          } else {
-                             player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("ArgumentRequired") + ChatColor.RESET + " /crate crate <type> [player]"));
+                             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("ArgumentRequired") + ChatColor.RESET + " /crate crate <type> [player]"));
                          }
                      } else if (args[0].equalsIgnoreCase("keyall")) {
 
@@ -175,7 +175,7 @@ public class Crate implements CommandExecutor, TabCompleter {
                                              keyplayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("PlayerKeyGiven").replace("%key%", crateName)));
 
 
-                                             player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("KeyGiven").replace("%target%", keyplayer.getDisplayName()).replace("%key%", crateName)));
+                                             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("KeyGiven").replace("%target%", keyplayer.getDisplayName()).replace("%key%", crateName)));
 
                                          }
                                      }
@@ -195,14 +195,14 @@ public class Crate implements CommandExecutor, TabCompleter {
                                          keyplayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("PlayerKeyGiven").replace("%key%", crateName)));
 
 
-                                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("KeyGiven").replace("%target%", keyplayer.getDisplayName()).replace("%key%", crateName)));
+                                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("KeyGiven").replace("%target%", keyplayer.getDisplayName()).replace("%key%", crateName)));
 
                                      }
                                  } else {
-                                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("NoKey")));
+                                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("NoKey")));
                                  }
                                  } else {
-                                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("ArgumentRequired") + ChatColor.RESET + " /crate keyall <type> [amount]"));
+                                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("ArgumentRequired") + ChatColor.RESET + " /crate keyall <type> [amount]"));
 
                                  }
 
@@ -225,14 +225,14 @@ public class Crate implements CommandExecutor, TabCompleter {
                                         for (int i = 0; i < amount; i++) {
                                             target.getInventory().addItem(key);
                                         }
-                                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("KeyGiven").replace("%target%", target.getDisplayName()).replace("%key%", crateName)));
+                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("KeyGiven").replace("%target%", target.getDisplayName()).replace("%key%", crateName)));
                                         target.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("PlayerKeyGiven").replace("%key%", crateName)));
 
                                     } else {
-                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("InvalidUser")));
+                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("InvalidUser")));
                                 }
                             } else {
-                                player.sendMessage(ChatColor.translateAlternateColorCodes('&',CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("NoCrate")));
+                                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("NoCrate")));
                             }
                         } else if (args.length > 2) {
                             String crateName = args[1];
@@ -251,10 +251,10 @@ public class Crate implements CommandExecutor, TabCompleter {
                                         for (int i = 0; i < amount; i++) {
                                             target.getInventory().addItem(key);
                                         }
-                                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("PlayerKeyGiven").replace("%key%", crateName)));
+                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("KeyGiven").replace("%key%", crateName)));
 
                                     } else {
-                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("NoKey")));
+                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("NoKey")));
 
                             }
                         } else if (args.length > 1) {
@@ -264,36 +264,36 @@ public class Crate implements CommandExecutor, TabCompleter {
                             if (data.getConfig().get(crateName + ".color") != null) {
                                 ItemStack key = CreateKey(crateName);
                                 String color = data.getConfig().getString(crateName + ".color");
-
+                                if(sender instanceof Player player ) {
                                 player.getInventory().addItem(key);
-                                player.sendMessage(ChatColor.translateAlternateColorCodes('&',CratesPlus.chatPrefix +  lang.getConfig().getString("PlayerKeyGiven").replace("%key%", crateName)));
-                            } else {
-                                player.sendMessage(ChatColor.translateAlternateColorCodes('&',CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("NoCrate")));
+                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("PlayerKeyGiven").replace("%key%", crateName)));
+                                }
+                                } else {
+                                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("NoCrate")));
                             }
                         } else {
-                            player.sendMessage(ChatColor.translateAlternateColorCodes('&',CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("ArgumentRequired") + ChatColor.RESET + " /crate key <type> [player] [amount]"));
+                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("ArgumentRequired") + ChatColor.RESET + " /crate key <type> [player] [amount]"));
                         }
                     } else {
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("InvalidArgument")));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("InvalidArgument")));
                     }
                 } else {
-                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " ----- CratePlus " + plugin.getDescription().getVersion() + " Help -----");
-                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate settings " + ChatColor.YELLOW + "Edit settings of CratesPlus and crate winnings");
-                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate create <name> " + ChatColor.YELLOW + "Create a new crate");
-                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate rename <old name> <new name> " + ChatColor.YELLOW + "Rename a crate");
-                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate delete <name> " + ChatColor.YELLOW + "Delete a crate");
-                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate give <player/all> [crate] [amount] " + ChatColor.YELLOW + "Give player a crate/key, if no crate given it will be random");
-                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate crate <type> [player] " + ChatColor.YELLOW + "Give player a crate to be placed, for use by admins");
-                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate key <type> [player] [amount] " + ChatColor.YELLOW + "Give player a key");
-                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate keyall <type> [amount] " + ChatColor.YELLOW + "Give everyone a key");
+                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " ----- CratePlus " + plugin.getDescription().getVersion() + " Help -----");
+                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate settings " + ChatColor.YELLOW + "Edit settings of CratesPlus and crate winnings");
+                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate create <name> " + ChatColor.YELLOW + "Create a new crate");
+                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate rename <old name> <new name> " + ChatColor.YELLOW + "Rename a crate");
+                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate delete <name> " + ChatColor.YELLOW + "Delete a crate");
+                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate give <player/all> [crate] [amount] " + ChatColor.YELLOW + "Give player a crate/key, if no crate given it will be random");
+                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate crate <type> [player] " + ChatColor.YELLOW + "Give player a crate to be placed, for use by admins");
+                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate key <type> [player] [amount] " + ChatColor.YELLOW + "Give player a key");
+                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate keyall <type> [amount] " + ChatColor.YELLOW + "Give everyone a key");
 
                      //			sender.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + "/crate claim " + ChatColor.YELLOW + "Claim any keys that are waiting for you");
                  }
             } else {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&',CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("NoArgument")));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("NoArgument")));
             }
-        }
-        return true;
+    return true;
     }
 
     @Override

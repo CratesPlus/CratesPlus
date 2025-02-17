@@ -6,7 +6,7 @@
 
     <groupId>plus.crates</groupId>
     <artifactId>CratesPlus</artifactId>
-    <version>update-v2.0.1</version>
+    <version>update-v2.0.3</version>
     <packaging>jar</packaging>
 
     <name>CratesPlus</name>
