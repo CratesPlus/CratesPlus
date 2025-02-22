@@ -255,7 +255,26 @@ public class Crate implements CommandExecutor, TabCompleter {
                             }
                         } else if (args.length > 2) {
                             String crateName = args[1];
-                            Player target = Bukkit.getPlayer(args[2]);
+                            if(StringConverter.isStringInt(args[2])) {
+                                int amount = Integer.parseInt(args[2]);
+
+                                if (sender instanceof Player player) {
+                                    ItemStack key = CreateKey(crateName);
+                                    String color = data.getConfig().getString(crateName + ".color");
+
+
+                                    for (int i = 0; i < amount; i++) {
+                                        player.getInventory().addItem(key);
+                                    }
+                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("KeyGiven").replace("%target%", player.getDisplayName()).replace("%key%", crateName)));
+                                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("PlayerKeyGiven").replace("%key%", crateName)));
+
+                                } else {
+                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("InvalidUser")));
+                                }
+                            } else {
+
+                                Player target = Bukkit.getPlayer(args[2]);
 
                             int amount = 1;
                             String color = data.getConfig().getString(crateName + ".color");
@@ -266,15 +285,14 @@ public class Crate implements CommandExecutor, TabCompleter {
                                 if (data.getConfig().get(crateName + ".color") != null) {
 
 
-
-                                        for (int i = 0; i < amount; i++) {
-                                            target.getInventory().addItem(key);
-                                        }
-                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("KeyGiven").replace("%key%", crateName)));
+                                    for (int i = 0; i < amount; i++) {
+                                        target.getInventory().addItem(key);
+                                    }
+                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("KeyGiven").replace("%key%", crateName)));
 
                                     } else {
                                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("NoKey")));
-
+}
                             }
                         } else if (args.length > 1) {
                             String crateName = args[1];
