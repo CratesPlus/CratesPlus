@@ -4,6 +4,7 @@ import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.jetbrains.annotations.NotNull;
 import plus.crates.CratesPlus;
 import plus.crates.frameworks.DataManager;
+import plus.crates.frameworks.StringConverter;
 import plus.crates.menus.Crates;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -213,13 +214,30 @@ public class Crate implements CommandExecutor, TabCompleter {
 
                             data.reloadConfig();
                             if (data.getConfig().get(crateName + ".color") != null) {
+                                if(StringConverter.isStringInt(args[2])) {
+                                    int amount = Integer.parseInt(args[2]);
 
-                                Player target = Bukkit.getPlayer(args[2]);
-                                int amount = Integer.parseInt(args[3]);
+                                    if (sender instanceof Player player) {
+                                        ItemStack key = CreateKey(crateName);
+                                        String color = data.getConfig().getString(crateName + ".color");
 
-                                if (target != null) {
-                                    ItemStack key = CreateKey(crateName);
-                                    String color = data.getConfig().getString(crateName + ".color");
+
+                                        for (int i = 0; i < amount; i++) {
+                                            player.getInventory().addItem(key);
+                                        }
+                                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("KeyGiven").replace("%target%", player.getDisplayName()).replace("%key%", crateName)));
+                                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("PlayerKeyGiven").replace("%key%", crateName)));
+
+                                    } else {
+                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("InvalidUser")));
+                                    }
+                                } else {
+                                    Player target = Bukkit.getPlayer(args[2]);
+                                    int amount = Integer.parseInt(args[3]);
+
+                                    if (target != null) {
+                                        ItemStack key = CreateKey(crateName);
+                                        String color = data.getConfig().getString(crateName + ".color");
 
 
                                         for (int i = 0; i < amount; i++) {
@@ -229,7 +247,8 @@ public class Crate implements CommandExecutor, TabCompleter {
                                         target.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("PlayerKeyGiven").replace("%key%", crateName)));
 
                                     } else {
-                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("InvalidUser")));
+                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("InvalidUser")));
+                                    }
                                 }
                             } else {
                                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&',CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("NoCrate")));
