@@ -34,6 +34,14 @@
                                     <pattern>net.wesjd.anvilgui</pattern>
                                     <shadedPattern>plus.crates.anvilgui</shadedPattern>
                                 </relocation>
+                                <relocation>
+                                    <pattern>org.lushplugins.chatcolorhandler</pattern>
+                                    <shadedPattern>plus.crates.chatcolorhandler</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.bstats</pattern>
+                                    <shadedPattern>plus.crates.bstats</shadedPattern>
+                                </relocation>
                             </relocations>
                         </configuration>
                     </execution>
@@ -59,6 +67,10 @@
         <repository>
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>lushplugins.org</id>
+            <url>https://repo.lushplugins.org/releases/</url>
         </repository>
         <repository>
             <id>placeholderapi</id>
@@ -94,9 +106,21 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.bstats</groupId>
+            <artifactId>bstats-bukkit</artifactId>
+            <version>3.0.2</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>net.wesjd</groupId>
             <artifactId>anvilgui</artifactId>
             <version>1.10.4-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.lushplugins</groupId>
+            <artifactId>ChatColorHandler</artifactId>
+            <version>4.0.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

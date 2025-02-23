@@ -2,7 +2,7 @@ name: CratesPlus
 description: ${project.description}
 main: plus.crates.CratesPlus
 version: v2.1.0
-api-version: 1.13
+api-version: 1.21
 author: Geoorloofd,Verdedigd,ConnectedDino,GamenMetShane
 depend: [DecentHolograms]
 commands:

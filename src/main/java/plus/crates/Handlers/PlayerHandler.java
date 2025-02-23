@@ -1,15 +1,14 @@
 package plus.crates.Handlers;
 
-import org.bukkit.scheduler.BukkitRunnable;
+import org.lushplugins.chatcolorhandler.ChatColorHandler;
 import plus.crates.CratesPlus;
 import plus.crates.Handlers.Holograms.DecentHologramMaker;
 import plus.crates.frameworks.DataManager;
-import plus.crates.menus.CrateOpen;
+import plus.crates.menus.Openers.CSGOOpener;
+import plus.crates.menus.Openers.DefaultOpener;
 import plus.crates.menus.CratePreview;
 import org.bukkit.*;
 import org.bukkit.block.TileState;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,8 +19,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import plus.crates.menus.Openers.NoGUI;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +36,7 @@ public class PlayerHandler implements Listener {
         lang = new DataManager(plugin, "lang");
 
     }
+
 
     @EventHandler
     private void onBlockPlace(BlockPlaceEvent event) {
@@ -73,8 +73,8 @@ public class PlayerHandler implements Listener {
         data.reloadConfig();
         String color = data.getConfig().getString(crateName + ".color");
         String line1 = color + crateName;
-        String line2 = ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("RightClickCrate"));
-        String line3 = ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("LeftClickCrate"));
+        String line2 = ChatColorHandler.translate(lang.getConfig().getString("RightClickCrate"));
+        String line3 = ChatColorHandler.translate(lang.getConfig().getString("LeftClickCrate"));
         ArrayList<String> lines = new ArrayList<>();
         lines.add(line1);
         lines.add(line2);
@@ -118,9 +118,15 @@ public class PlayerHandler implements Listener {
                         if (isCorrectKey(itemStack, crateName) && itemStack.getType() == Material.TRIPWIRE_HOOK) {
                             // Remove key from inv
                             itemStack.setAmount(itemStack.getAmount() - 1);
+                            if ("CSGO".equals(data.getConfig().getString(crateName + ".opener"))) {
+                                new CSGOOpener(CratesPlus.getPlayerMenuUtility(player), plugin, crateName, player).open();
+                            } else if("NoGUI".equals(data.getConfig().getString(crateName + ".opener"))) {
+                            NoGUI.NoGUIOpener(plugin,crateName,player);
 
-                            new CrateOpen(CratesPlus.getPlayerMenuUtility(player), plugin, crateName, player).open();
-
+                        }
+                            else {
+                                new DefaultOpener(CratesPlus.getPlayerMenuUtility(player), plugin, crateName, player).open();
+                            }
                         } else {
                             player.sendMessage(ChatColor.translateAlternateColorCodes('&',CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("MustHolding").replace("%key%", crateName).replace("%keycolor%", color)));
                         }

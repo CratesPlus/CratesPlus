@@ -32,6 +32,7 @@ Win: " Win"
 EditCrateColor: "Edit Crate Color"
 EditCrateWinnings: "Edit Crate Winnings"
 EditItemPercentages: "Edit Item Percentages"
+EditOpeners: "Edit Crate Opener"
 EditCrate: "Edit %cratename% Crate Winnings"
 EditCrateSettings: "Edit %cratename%"
 Crate: " Crate"
@@ -56,6 +57,6 @@ PlayerCrateGiven: "You have been given a %cratecolor% %cratename% crate: "
 InvalidUser: "Invalid username"
 KeyGiven: "Given a player a %key% key. "
 PlayerKeyGiven: "You have been given a %key% key"
-
+OpenerChange: "You changed the opener of the crate to "
 
 

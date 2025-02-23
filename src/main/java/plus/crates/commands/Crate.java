@@ -4,6 +4,7 @@ import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.jetbrains.annotations.NotNull;
 import plus.crates.CratesPlus;
 import plus.crates.frameworks.DataManager;
+import plus.crates.frameworks.HexColor;
 import plus.crates.frameworks.StringConverter;
 import plus.crates.menus.Crates;
 import org.bukkit.Bukkit;
@@ -60,6 +61,7 @@ public class Crate implements CommandExecutor, TabCompleter {
                                  data.getConfig().set(crateName + ".items", items);
                                  data.getConfig().set(crateName + ".color", "§c");
                                  data.getConfig().set(crateName + ".chances", chances);
+                                 data.getConfig().set(crateName + ".opener", "default");
                                  data.saveConfig();
                                  data.reloadConfig();
 
@@ -129,11 +131,11 @@ public class Crate implements CommandExecutor, TabCompleter {
                                  if (target != null) {
                                      ItemStack crate = CreateCrate(crateName);
                                      String color = data.getConfig().getString(crateName + ".color");
-
+                                     String chatcolor = HexColor.ItemHEX(color).toString();
                                      target.getInventory().addItem(crate);
 
                                      sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("CrateGiven").replace("%cratename%", crateName)));
-                                     target.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("PlayerCrateGiven").replace("%cratecolor%", color).replace("%cratename%", crateName)));
+                                     target.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("PlayerCrateGiven").replace("%cratecolor%", chatcolor).replace("%cratename%", crateName)));
                                  } else {
                                      sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("InvalidUser")));
                                  }
@@ -147,9 +149,10 @@ public class Crate implements CommandExecutor, TabCompleter {
                              if (data.getConfig().get(crateName + ".color") != null) {
                                  ItemStack crate = CreateCrate(crateName);
                                  String color = data.getConfig().getString(crateName + ".color");
+                                 String chatcolor = HexColor.ItemHEX(color).toString();
                                  if (sender instanceof Player player) {
                                  player.getInventory().addItem(crate);
-                                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("PlayerCrateGiven").replace("%cratecolor%", color).replace("%cratename%", crateName)));
+                                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + lang.getConfig().getString("PlayerCrateGiven").replace("%cratecolor%", chatcolor).replace("%cratename%", crateName)));
                              }
                              } else {
                                  sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("NoCrate")));
@@ -358,7 +361,7 @@ public class Crate implements CommandExecutor, TabCompleter {
         itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
         data.reloadConfig();
-        String color = data.getConfig().getString(crateName + ".color");
+        ChatColor color = HexColor.ItemHEX(data.getConfig().getString(crateName + ".color"));
         itemMeta.setDisplayName(color + crateName + " " + lang.getConfig().getString("CrateKey"));
 
         // Inject name
@@ -377,7 +380,7 @@ public class Crate implements CommandExecutor, TabCompleter {
         assert itemMeta != null;
 
         data.reloadConfig();
-        String color = data.getConfig().getString(crateName + ".color");
+        ChatColor color =  HexColor.ItemHEX(data.getConfig().getString(crateName + ".color"));
         itemMeta.setDisplayName(color + crateName);
 
         // Inject name

@@ -1,5 +1,6 @@
 package plus.crates.menus;
 
+import org.lushplugins.chatcolorhandler.ChatColorHandler;
 import plus.crates.CratesPlus;
 import plus.crates.frameworks.DataManager;
 import plus.crates.frameworks.Menu;
@@ -47,6 +48,7 @@ public class CrateSettings extends Menu {
             case DIAMOND -> new CrateWinnings(CratesPlus.getPlayerMenuUtility(player), plugin, crateName).open();
             case CYAN_WOOL -> new CrateColor(CratesPlus.getPlayerMenuUtility(player), plugin, crateName).open();
             case GOLD_INGOT -> new CrateChances(CratesPlus.getPlayerMenuUtility(player), plugin, crateName).open();
+            case IRON_DOOR -> new CrateOpener(CratesPlus.getPlayerMenuUtility(player), plugin, crateName).open();
             case BARRIER -> new Crates(CratesPlus.getPlayerMenuUtility(player), plugin).open();
 
         }
@@ -60,9 +62,11 @@ public class CrateSettings extends Menu {
     @Override
     public void setMenuItems() {
         // make items
-        inventory.setItem(1, makeItem(Material.DIAMOND, lang.getConfig().getString("EditCrateWinnings")));
-        inventory.setItem(3, makeItem(Material.CYAN_WOOL, lang.getConfig().getString("EditCrateColor")));
-        inventory.setItem(5, makeItem(Material.GOLD_INGOT, lang.getConfig().getString("EditItemPercentages")));
-        inventory.setItem(7, makeItem(Material.BARRIER, lang.getConfig().getString("GoBack")));
+        inventory.setItem(0, makeItem(Material.DIAMOND, lang.getConfig().getString("EditCrateWinnings")));
+        inventory.setItem(2, makeItem(Material.CYAN_WOOL, lang.getConfig().getString("EditCrateColor")));
+        inventory.setItem(4, makeItem(Material.GOLD_INGOT, lang.getConfig().getString("EditItemPercentages")));
+        inventory.setItem(6, makeItem(Material.IRON_DOOR, lang.getConfig().getString("EditOpeners")));
+        inventory.setItem(8, makeItem(Material.BARRIER, lang.getConfig().getString("GoBack")));
+
     }
 }

@@ -1,7 +1,9 @@
 package plus.crates;
 
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
+import org.lushplugins.chatcolorhandler.ChatColorHandler;
 import plus.crates.Handlers.MenuHandler;
 import plus.crates.Handlers.PlayerHandler;
 import plus.crates.commands.Crate;
@@ -25,6 +27,8 @@ public final class CratesPlus extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        int pluginId = 24916; // <-- Replace with the id of your plugin!
+        Metrics metrics = new Metrics(this, pluginId);
         instance = this;
         chatPrefix = ChatColor.translateAlternateColorCodes('&', lang.getConfig().getString("Prefix") + " ");
 
@@ -46,7 +50,7 @@ public final class CratesPlus extends JavaPlugin {
     public void reloadCratesConfig() {
         lang.reloadConfig(); // Herlaad de taalconfig
         data.reloadConfig();
-        chatPrefix = ChatColor.translateAlternateColorCodes('&', lang.getConfig().getString("Prefix") + " ");
+        chatPrefix = ChatColorHandler.translate( lang.getConfig().getString("Prefix") + " ");
     }
     @Override
     public void onDisable() {
