@@ -1,10 +1,12 @@
 package plus.crates.menus;
 
+import net.md_5.bungee.api.ChatColor;
+import org.lushplugins.chatcolorhandler.ChatColorHandler;
 import plus.crates.CratesPlus;
 import plus.crates.frameworks.DataManager;
+import plus.crates.frameworks.HexColor;
 import plus.crates.frameworks.Menu;
 import plus.crates.frameworks.PlayerMenuUtility;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -55,8 +57,8 @@ public class Crates extends Menu {
         data.reloadConfig();
         data.getConfig().getKeys(false).forEach(crate -> {
             // Create crate item
-            String color = data.getConfig().getString(crate + ".color");
-            inventory.addItem(makeItem(Material.CHEST, color + crate));
+           ChatColor color =  HexColor.ItemHEX(data.getConfig().getString(crate + ".color"));
+           inventory.addItem(makeItem(Material.CHEST, color + crate));
         });
     }
 }

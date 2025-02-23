@@ -12,7 +12,7 @@ import plus.crates.frameworks.DataManager;
 import plus.crates.frameworks.Menu;
 import plus.crates.frameworks.PlayerMenuUtility;
 import org.bukkit.Material;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 
@@ -164,16 +164,16 @@ public class CrateColor extends Menu {
 
                                 String text = stateSnapshot.getText();
                                     // Update the correct chance
-                                    data.getConfig().set(crateName + ".color", "§" + text);
-
-
-                                    // Reopen menu to refresh chances
+                                    data.getConfig().set(crateName + ".color", text);
+                                data.saveConfig();
+                                data.reloadConfig();
+                                // Reopen menu to refresh chances
                                     stateSnapshot.getPlayer().sendMessage(lang.getConfig().getString("ColorChange") + ChatColor.WHITE + " " + text);
                                     return AnvilGUI.Response.close();
 
                             })
-                            .title("Type HEX code (without &)")
-                            .text("§f")
+                            .title("Type HEX code")
+                            .text("HEX (without &)")
                             .plugin(plugin)
                             .itemLeft(new ItemStack(Material.PAPER))
                             .open((Player) event.getWhoClicked());
@@ -207,15 +207,14 @@ public class CrateColor extends Menu {
         inventory.addItem(makeItem(Material.ORANGE_WOOL, "§6" + lang.getConfig().getString("Gold")));
         inventory.addItem(makeItem(Material.LIGHT_GRAY_WOOL, "§7" + lang.getConfig().getString("Gray")));
         inventory.addItem(makeItem(Material.GRAY_WOOL, "§8" + lang.getConfig().getString("DarkGray")));
-        inventory.setItem(10, makeItem(Material.LIGHT_BLUE_WOOL, "§9" + lang.getConfig().getString("Blue")));
-        inventory.setItem(11, makeItem(Material.GREEN_WOOL, "§a" + lang.getConfig().getString("Green")));
-        inventory.setItem(12, makeItem(Material.CYAN_WOOL, "§b" + lang.getConfig().getString("Aqua")));
-        inventory.setItem(13, makeItem(Material.RED_WOOL, "§c" + lang.getConfig().getString("Red")));
-        inventory.setItem(14, makeItem(Material.PINK_WOOL, "§d" + lang.getConfig().getString("LightPurple")));
-        inventory.setItem(15, makeItem(Material.YELLOW_WOOL, "§e" + lang.getConfig().getString("Yellow")));
-        inventory.setItem(16, makeItem(Material.WHITE_WOOL, "§f" + lang.getConfig().getString("White")));
-        inventory.setItem(16, makeItem(Material.WHITE_WOOL, "§f" + lang.getConfig().getString("White")));
-        inventory.setItem(20, makeItem(BARRIER, "§f" + lang.getConfig().getString("Other")));
+        inventory.setItem(9, makeItem(Material.LIGHT_BLUE_WOOL, "§9" + lang.getConfig().getString("Blue")));
+        inventory.setItem(10, makeItem(Material.GREEN_WOOL, "§a" + lang.getConfig().getString("Green")));
+        inventory.setItem(11, makeItem(Material.CYAN_WOOL, "§b" + lang.getConfig().getString("Aqua")));
+        inventory.setItem(12, makeItem(Material.RED_WOOL, "§c" + lang.getConfig().getString("Red")));
+        inventory.setItem(13, makeItem(Material.PINK_WOOL, "§d" + lang.getConfig().getString("LightPurple")));
+        inventory.setItem(14, makeItem(Material.YELLOW_WOOL, "§e" + lang.getConfig().getString("Yellow")));
+        inventory.setItem(15, makeItem(Material.WHITE_WOOL, "§f" + lang.getConfig().getString("White")));
+        inventory.setItem(17, makeItem(BARRIER, "§f" + lang.getConfig().getString("Other")));
 
     }
 }

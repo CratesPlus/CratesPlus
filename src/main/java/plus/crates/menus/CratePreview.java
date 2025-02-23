@@ -1,7 +1,10 @@
 package plus.crates.menus;
 
+import net.md_5.bungee.api.ChatColor;
+import org.lushplugins.chatcolorhandler.ChatColorHandler;
 import plus.crates.CratesPlus;
 import plus.crates.frameworks.DataManager;
+import plus.crates.frameworks.HexColor;
 import plus.crates.frameworks.Menu;
 import plus.crates.frameworks.PlayerMenuUtility;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -29,7 +32,7 @@ public class CratePreview extends Menu {
     @Override
     public String getMenuName() {
         data.reloadConfig();
-        String color = data.getConfig().getString(crateName + ".color");
+        ChatColor color = HexColor.ItemHEX(data.getConfig().getString(crateName + ".color"));
         return color + crateName + " " + lang.getConfig().getString("PossibleWins");
     }
 

@@ -5,12 +5,13 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+import org.lushplugins.chatcolorhandler.ChatColorHandler;
 import plus.crates.CratesPlus;
 import plus.crates.frameworks.ChatName;
 import plus.crates.frameworks.DataManager;
 import plus.crates.frameworks.Menu;
 import plus.crates.frameworks.PlayerMenuUtility;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
@@ -77,7 +78,7 @@ public class CrateWinnings extends Menu {
         }
         data.getConfig().set(crateName + ".chances", chances);
         data.saveConfig();
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix") + " " + lang.getConfig().getString("SuccessCrateWinnings")));
+        ChatColorHandler.sendMessage(player,lang.getConfig().getString("Prefix") + " " + lang.getConfig().getString("SuccessCrateWinnings"));
     }
 
 
