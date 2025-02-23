@@ -7,7 +7,7 @@ import plus.crates.frameworks.DataManager;
 import plus.crates.frameworks.StringConverter;
 import plus.crates.menus.Crates;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;

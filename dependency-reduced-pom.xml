@@ -4,7 +4,7 @@
   <groupId>plus.crates</groupId>
   <artifactId>CratesPlus</artifactId>
   <name>CratesPlus</name>
-  <version>v2.0.4</version>
+  <version>v2.1.0</version>
   <build>
     <plugins>
       <plugin>

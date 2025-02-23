@@ -1,6 +1,6 @@
 package plus.crates.menus;
 
-import org.bukkit.ChatColor;
+import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -12,10 +12,12 @@ import plus.crates.frameworks.DataManager;
 import plus.crates.frameworks.Menu;
 import plus.crates.frameworks.PlayerMenuUtility;
 import org.bukkit.Material;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 
 import javax.swing.*;
+import java.util.Collections;
 import java.util.List;
 
 import static org.bukkit.Material.*;
@@ -152,6 +154,31 @@ public class CrateColor extends Menu {
                         data.getConfig().set(crateName + ".color", "§f");
                         event.getWhoClicked().sendMessage(lang.getConfig().getString("ColorChange") + ChatColor.WHITE + lang.getConfig().getString("White"));
                     }
+            case BARRIER:
+                if(clickedItem.getType() == BARRIER) {
+                    new AnvilGUI.Builder()
+                            .onClick((clickedSlot, stateSnapshot) -> {
+                                if (clickedSlot != AnvilGUI.Slot.OUTPUT) {
+                                    return Collections.emptyList();
+                                }
+
+                                String text = stateSnapshot.getText();
+                                    // Update the correct chance
+                                    data.getConfig().set(crateName + ".color", "§" + text);
+
+
+                                    // Reopen menu to refresh chances
+                                    stateSnapshot.getPlayer().sendMessage(lang.getConfig().getString("ColorChange") + ChatColor.WHITE + " " + text);
+                                    return AnvilGUI.Response.close();
+
+                            })
+                            .title("Type HEX code (without &)")
+                            .text("§f")
+                            .plugin(plugin)
+                            .itemLeft(new ItemStack(Material.PAPER))
+                            .open((Player) event.getWhoClicked());
+
+                }
         }
         data.saveConfig();
         data.reloadConfig();
@@ -187,5 +214,8 @@ public class CrateColor extends Menu {
         inventory.setItem(14, makeItem(Material.PINK_WOOL, "§d" + lang.getConfig().getString("LightPurple")));
         inventory.setItem(15, makeItem(Material.YELLOW_WOOL, "§e" + lang.getConfig().getString("Yellow")));
         inventory.setItem(16, makeItem(Material.WHITE_WOOL, "§f" + lang.getConfig().getString("White")));
+        inventory.setItem(16, makeItem(Material.WHITE_WOOL, "§f" + lang.getConfig().getString("White")));
+        inventory.setItem(20, makeItem(BARRIER, "§f" + lang.getConfig().getString("Other")));
+
     }
 }

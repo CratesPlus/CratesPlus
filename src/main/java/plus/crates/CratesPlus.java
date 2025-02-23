@@ -7,7 +7,7 @@ import plus.crates.Handlers.PlayerHandler;
 import plus.crates.commands.Crate;
 import plus.crates.frameworks.DataManager;
 import plus.crates.frameworks.PlayerMenuUtility;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import plus.crates.frameworks.Updater;

@@ -1,7 +1,7 @@
 package plus.crates.menus;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import plus.crates.CratesPlus;
 import plus.crates.frameworks.ChatName;
 import plus.crates.frameworks.DataManager;
