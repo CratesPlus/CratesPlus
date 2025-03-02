@@ -63,21 +63,21 @@ public class CrateOpener extends Menu {
             case DIAMOND_SWORD:
                 if(clickedItem.getType() == DIAMOND_SWORD) {
                     data.getConfig().set(crateName + ".opener", "CSGO");
-                    event.getWhoClicked().sendMessage(lang.getConfig().getString("OpenerChange") + "CSGO");
+                    event.getWhoClicked().sendMessage(lang.getConfig().getString("Prefix") + " " + lang.getConfig().getString("OpenerChange") + "CSGO");
                     data.saveConfig();
                     data.reloadConfig();
                 }
             case COMPASS:
                 if(clickedItem.getType() == COMPASS) {
                     data.getConfig().set(crateName + ".opener", "default");
-                    event.getWhoClicked().sendMessage(lang.getConfig().getString("OpenerChange") + "default");
+                    event.getWhoClicked().sendMessage(lang.getConfig().getString("Prefix") + " " + lang.getConfig().getString("OpenerChange") + "default");
                     data.saveConfig();
                     data.reloadConfig();
                 }
             case BARRIER:
                 if(clickedItem.getType() == BARRIER) {
                     data.getConfig().set(crateName + ".opener", "NoGUI");
-                    event.getWhoClicked().sendMessage(lang.getConfig().getString("OpenerChange") + "NoGUI");
+                    event.getWhoClicked().sendMessage(lang.getConfig().getString("Prefix") + " " + lang.getConfig().getString("OpenerChange") + "NoGUI");
                     data.saveConfig();
                     data.reloadConfig();
                 }

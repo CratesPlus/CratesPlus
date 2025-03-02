@@ -65,94 +65,94 @@ public class CrateColor extends Menu {
             case BLACK_WOOL:
                 if(clickedItem.getType() == BLACK_WOOL) {
                     data.getConfig().set(crateName + ".color", "§0");
-                    event.getWhoClicked().sendMessage(lang.getConfig().getString("ColorChange") + ChatColor.BLACK + lang.getConfig().getString("Black"));
+                    event.getWhoClicked().sendMessage(lang.getConfig().getString("Prefix") + " " + lang.getConfig().getString("ColorChange") + ChatColor.BLACK + lang.getConfig().getString("Black"));
             }
             case BLUE_WOOL:
                 if(clickedItem.getType() == BLUE_WOOL) {
                     data.getConfig().set(crateName + ".color", "§1");
-                    event.getWhoClicked().sendMessage(lang.getConfig().getString("ColorChange") + ChatColor.DARK_BLUE + lang.getConfig().getString("DarkBlue"));
+                    event.getWhoClicked().sendMessage(lang.getConfig().getString("Prefix") + " " + lang.getConfig().getString("ColorChange") + ChatColor.DARK_BLUE + lang.getConfig().getString("DarkBlue"));
                 }
             case GREEN_CONCRETE:
                 if(clickedItem.getType() == GREEN_CONCRETE) {
                     data.getConfig().set(crateName + ".color", "§2");
-                    event.getWhoClicked().sendMessage(lang.getConfig().getString("ColorChange") + ChatColor.GREEN + lang.getConfig().getString("DarkGreen"));
+                    event.getWhoClicked().sendMessage(lang.getConfig().getString("Prefix") + " " + lang.getConfig().getString("ColorChange") + ChatColor.GREEN + lang.getConfig().getString("DarkGreen"));
                 }
                 case CYAN_CONCRETE:
 
                     if(clickedItem.getType() == CYAN_CONCRETE) {
 
                         data.getConfig().set(crateName + ".color", "§3");
-                        event.getWhoClicked().sendMessage(lang.getConfig().getString("ColorChange") + ChatColor.DARK_AQUA + lang.getConfig().getString("DarkAqua"));
+                        event.getWhoClicked().sendMessage(lang.getConfig().getString("Prefix") + " " + lang.getConfig().getString("ColorChange") + ChatColor.DARK_AQUA + lang.getConfig().getString("DarkAqua"));
                     }
                 case RED_CONCRETE:
                     if(clickedItem.getType() == RED_CONCRETE) {
 
                         data.getConfig().set(crateName + ".color", "§4");
-                        event.getWhoClicked().sendMessage(lang.getConfig().getString("ColorChange") + ChatColor.DARK_RED + lang.getConfig().getString("DarkRed"));
+                        event.getWhoClicked().sendMessage(lang.getConfig().getString("Prefix") + " " + lang.getConfig().getString("ColorChange") + ChatColor.DARK_RED + lang.getConfig().getString("DarkRed"));
                     }
             case PURPLE_WOOL:
                 if(clickedItem.getType() == PURPLE_WOOL) {
                     data.getConfig().set(crateName + ".color", "§5");
-                    event.getWhoClicked().sendMessage(lang.getConfig().getString("ColorChange") + ChatColor.DARK_PURPLE + lang.getConfig().getString("DarkPurple"));
+                    event.getWhoClicked().sendMessage(lang.getConfig().getString("Prefix") + " " + lang.getConfig().getString("ColorChange") + ChatColor.DARK_PURPLE + lang.getConfig().getString("DarkPurple"));
                 }
                 case ORANGE_WOOL:
                     if(clickedItem.getType() == ORANGE_WOOL) {
                         data.getConfig().set(crateName + ".color", "§6");
-                        event.getWhoClicked().sendMessage(lang.getConfig().getString("ColorChange") + ChatColor.GOLD + lang.getConfig().getString("Gold"));
+                        event.getWhoClicked().sendMessage(lang.getConfig().getString("Prefix") + " " + lang.getConfig().getString("ColorChange") + ChatColor.GOLD + lang.getConfig().getString("Gold"));
                     }
                 case LIGHT_GRAY_WOOL:
                     if(clickedItem.getType() == LIGHT_GRAY_WOOL) {
 
                         data.getConfig().set(crateName + ".color", "§7");
-                        event.getWhoClicked().sendMessage(lang.getConfig().getString("ColorChange") + ChatColor.GRAY + lang.getConfig().getString("Gray"));
+                        event.getWhoClicked().sendMessage(lang.getConfig().getString("Prefix") + " " + lang.getConfig().getString("ColorChange") + ChatColor.GRAY + lang.getConfig().getString("Gray"));
                     }
                 case GRAY_WOOL:
                     if(clickedItem.getType() == GRAY_WOOL) {
 
                         data.getConfig().set(crateName + ".color", "§8");
-                        event.getWhoClicked().sendMessage(lang.getConfig().getString("ColorChange") + ChatColor.DARK_GRAY + lang.getConfig().getString("DarkGray"));
+                        event.getWhoClicked().sendMessage(lang.getConfig().getString("Prefix") + " " + lang.getConfig().getString("ColorChange") + ChatColor.DARK_GRAY + lang.getConfig().getString("DarkGray"));
                     }
                 case LIGHT_BLUE_WOOL:
                     if(clickedItem.getType() == LIGHT_BLUE_WOOL) {
 
                         data.getConfig().set(crateName + ".color", "§9");
-                        event.getWhoClicked().sendMessage(lang.getConfig().getString("ColorChange") + ChatColor.BLUE + lang.getConfig().getString("Blue"));
+                        event.getWhoClicked().sendMessage(lang.getConfig().getString("Prefix") + " " + lang.getConfig().getString("ColorChange") + ChatColor.BLUE + lang.getConfig().getString("Blue"));
                     }
             case GREEN_WOOL:
                 if(clickedItem.getType() == GREEN_WOOL) {
 
                     data.getConfig().set(crateName + ".color", "§a");
-                    event.getWhoClicked().sendMessage(lang.getConfig().getString("ColorChange") + ChatColor.GREEN + lang.getConfig().getString("Green"));
+                    event.getWhoClicked().sendMessage(lang.getConfig().getString("Prefix") + " " + lang.getConfig().getString("ColorChange") + ChatColor.GREEN + lang.getConfig().getString("Green"));
                 }
             case CYAN_WOOL:
                 if(clickedItem.getType() == CYAN_WOOL) {
 
                     data.getConfig().set(crateName + ".color", "§b");
-                    event.getWhoClicked().sendMessage(lang.getConfig().getString("ColorChange") + ChatColor.AQUA + lang.getConfig().getString("Aqua"));
+                    event.getWhoClicked().sendMessage(lang.getConfig().getString("Prefix") + " " + lang.getConfig().getString("ColorChange") + ChatColor.AQUA + lang.getConfig().getString("Aqua"));
                 }
             case RED_WOOL:
                 if(clickedItem.getType() == RED_WOOL) {
 
                     data.getConfig().set(crateName + ".color", "§c");
-                    event.getWhoClicked().sendMessage(lang.getConfig().getString("ColorChange") + ChatColor.RED + lang.getConfig().getString("Red"));
+                    event.getWhoClicked().sendMessage(lang.getConfig().getString("Prefix") + " " + lang.getConfig().getString("ColorChange") + ChatColor.RED + lang.getConfig().getString("Red"));
                 }
             case PINK_WOOL:
                 if(clickedItem.getType() == PINK_WOOL) {
 
                     data.getConfig().set(crateName + ".color", "§d");
-                    event.getWhoClicked().sendMessage(lang.getConfig().getString("ColorChange") + ChatColor.LIGHT_PURPLE + lang.getConfig().getString("LightPurple"));
+                    event.getWhoClicked().sendMessage(lang.getConfig().getString("Prefix") + " " + lang.getConfig().getString("ColorChange") + ChatColor.LIGHT_PURPLE + lang.getConfig().getString("LightPurple"));
                 }
                     case YELLOW_WOOL:
                         if(clickedItem.getType() == YELLOW_WOOL) {
 
                             data.getConfig().set(crateName + ".color", "§e");
-                            event.getWhoClicked().sendMessage(lang.getConfig().getString("ColorChange") + ChatColor.YELLOW + lang.getConfig().getString("Yellow"));
+                            event.getWhoClicked().sendMessage(lang.getConfig().getString("Prefix") + " " + lang.getConfig().getString("ColorChange") + ChatColor.YELLOW + lang.getConfig().getString("Yellow"));
                         }
                 case WHITE_WOOL:
                     if(clickedItem.getType() == WHITE_WOOL) {
 
                         data.getConfig().set(crateName + ".color", "§f");
-                        event.getWhoClicked().sendMessage(lang.getConfig().getString("ColorChange") + ChatColor.WHITE + lang.getConfig().getString("White"));
+                        event.getWhoClicked().sendMessage(lang.getConfig().getString("Prefix") + " " + lang.getConfig().getString("ColorChange") + ChatColor.WHITE + lang.getConfig().getString("White"));
                     }
             case BARRIER:
                 if(clickedItem.getType() == BARRIER) {
@@ -168,7 +168,7 @@ public class CrateColor extends Menu {
                                 data.saveConfig();
                                 data.reloadConfig();
                                 // Reopen menu to refresh chances
-                                    stateSnapshot.getPlayer().sendMessage(lang.getConfig().getString("ColorChange") + ChatColor.WHITE + " " + text);
+                                    stateSnapshot.getPlayer().sendMessage(lang.getConfig().getString("Prefix") + " " + lang.getConfig().getString("ColorChange") + ChatColor.WHITE + " " + text);
                                     return AnvilGUI.Response.close();
 
                             })
