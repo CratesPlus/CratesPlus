@@ -14,12 +14,17 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import plus.crates.frameworks.Updater;
 
+import java.sql.*;
 import java.util.HashMap;
 
 public final class CratesPlus extends JavaPlugin {
     private static CratesPlus instance;
     public final DataManager lang = new DataManager(this, "lang");
     public final DataManager data = new DataManager(this, "crates");
+    private Connection connection;
+    private final String DATABASE_URL = "jdbc:mysql://your-database-host:3306/your-database-name";
+    private final String DATABASE_USER = "your-database-user";
+    private final String DATABASE_PASSWORD = "your-database-password";
 
     public static String chatPrefix;
     private static final HashMap<Player, PlayerMenuUtility> playerMenuUtilityMap = new HashMap<>();
@@ -27,6 +32,16 @@ public final class CratesPlus extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        connectToDatabase();
+        String serverIp = Bukkit.getServer().getIp();
+        if (serverIp.isEmpty()) {
+            serverIp = "127.0.0.1"; // Voor localhost servers
+        }
+
+        if (isBlacklisted(serverIp)) {
+            getLogger().warning("Server Blacklisted! Disabling plugin!");
+            getServer().getPluginManager().disablePlugin(this);
+        }
         int pluginId = 24916; // <-- Replace with the id of your plugin!
         Metrics metrics = new Metrics(this, pluginId);
         instance = this;
@@ -51,9 +66,9 @@ public final class CratesPlus extends JavaPlugin {
         lang.reloadConfig(); // Herlaad de taalconfig
         data.reloadConfig();
         chatPrefix = ChatColorHandler.translate( lang.getConfig().getString("Prefix") + " ");
-    }
-    @Override
+    }@Override
     public void onDisable() {
+        disconnectFromDatabase();
         // Plugin shutdown logic
     }
     private boolean isDecentHologramsInstalled() {
@@ -69,6 +84,41 @@ public final class CratesPlus extends JavaPlugin {
             }
         });
 
+    }
+    private void connectToDatabase() {
+        try {
+            connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD);
+        } catch (SQLException e) {
+            getLogger().severe("Error when enabling plugin. Please contact support");
+            getServer().getPluginManager().disablePlugin(this);
+        }
+    }
+
+    private void disconnectFromDatabase() {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                getLogger().severe("Error when enabling plugin. Please contact support");
+
+            }
+        }
+    }
+
+    private boolean isBlacklisted(String serverIp) {
+        if (connection == null) return false;
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) FROM blacklist WHERE server_ip = ?");
+            statement.setString(1, serverIp);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            getLogger().severe("Error when enabling plugin. Please contact support");
+            getServer().getPluginManager().disablePlugin(this);
+        }
+        return false;
     }
     public static PlayerMenuUtility getPlayerMenuUtility(Player p) {
         PlayerMenuUtility playerMenuUtility;
