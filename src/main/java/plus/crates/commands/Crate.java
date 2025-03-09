@@ -1,11 +1,14 @@
 package plus.crates.commands;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 import plus.crates.CratesPlus;
 import plus.crates.frameworks.DataManager;
 import plus.crates.frameworks.HexColor;
 import plus.crates.frameworks.StringConverter;
+import plus.crates.menus.CratePreview;
 import plus.crates.menus.Crates;
 import org.bukkit.Bukkit;
 import net.md_5.bungee.api.ChatColor;
@@ -23,6 +26,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,7 +52,11 @@ public class Crate implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
             if (sender.hasPermission("cratesplus.admin")) {
                  if (args.length > 0) {
-                     if (args[0].equalsIgnoreCase("create")) {
+                     if(args[0].equalsIgnoreCase("preview")) {
+                         String crateName = args[1];
+                         new CratePreview(CratesPlus.getPlayerMenuUtility((Player) sender),plugin,crateName).open();
+                     }
+                     else if (args[0].equalsIgnoreCase("create")) {
                          if (args.length > 1) {
                              String crateName = args[1];
 
@@ -323,6 +331,7 @@ public class Crate implements CommandExecutor, TabCompleter {
                      sender.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " ----- CratePlus " + plugin.getDescription().getVersion() + " Help -----");
                      sender.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate settings " + ChatColor.YELLOW + "Edit settings of CratesPlus and crate winnings");
                      sender.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate create <name> " + ChatColor.YELLOW + "Create a new crate");
+                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate preview <name> " + ChatColor.YELLOW + "Preview a crate");
                      sender.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate rename <old name> <new name> " + ChatColor.YELLOW + "Rename a crate");
                      sender.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate delete <name> " + ChatColor.YELLOW + "Delete a crate");
                      sender.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate crate <type> [player] " + ChatColor.YELLOW + "Give player a crate to be placed, for use by admins");
@@ -351,10 +360,11 @@ public class Crate implements CommandExecutor, TabCompleter {
             return options; // Geen permissie, geen suggesties
         }
 
-        List<String> crateNames = new ArrayList<>(data.getConfig().getStringList("")); // Haal cratenamen uit het eerste niveau van crates.yml
+        FileConfiguration cratesConfig = YamlConfiguration.loadConfiguration(new File("plugins/CratesPlus/crates.yml"));
+        List<String> crateNames = new ArrayList<>(cratesConfig.getConfigurationSection("").getKeys(false)); // Haal cratenamen uit het eerste niveau van crates.yml
 
         if (args.length == 1) {
-            options.addAll(Arrays.asList("create", "rename", "delete", "crate", "key", "keyall"));
+            options.addAll(Arrays.asList("create", "rename", "delete", "crate", "key", "keyall", "preview"));
         } else if (args.length == 2) {
             switch (args[0].toLowerCase()) {
                 case "create":
@@ -372,6 +382,9 @@ public class Crate implements CommandExecutor, TabCompleter {
                     options.addAll(crateNames);
                     break;
                 case "keyall":
+                    options.addAll(crateNames);
+                    break;
+                case "preview":
                     options.addAll(crateNames);
                     break;
             }
