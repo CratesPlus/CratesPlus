@@ -22,9 +22,6 @@ public final class CratesPlus extends JavaPlugin {
     public final DataManager lang = new DataManager(this, "lang");
     public final DataManager data = new DataManager(this, "crates");
     private Connection connection;
-    private final String DATABASE_URL = "jdbc:mysql://87.106.80.245:3306/shane_blacklistcratesplus";
-    private final String DATABASE_USER = "shane_blacklistcratesplus";
-    private final String DATABASE_PASSWORD = "qMzdhrsdMMe759hqJZEP";
 
     public static String chatPrefix;
     private static final HashMap<Player, PlayerMenuUtility> playerMenuUtilityMap = new HashMap<>();
