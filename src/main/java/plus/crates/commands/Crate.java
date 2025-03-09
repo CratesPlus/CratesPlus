@@ -24,7 +24,9 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Crate implements CommandExecutor, TabCompleter {
     private final DataManager data;
@@ -323,7 +325,6 @@ public class Crate implements CommandExecutor, TabCompleter {
                      sender.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate create <name> " + ChatColor.YELLOW + "Create a new crate");
                      sender.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate rename <old name> <new name> " + ChatColor.YELLOW + "Rename a crate");
                      sender.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate delete <name> " + ChatColor.YELLOW + "Delete a crate");
-                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate give <player/all> [crate] [amount] " + ChatColor.YELLOW + "Give player a crate/key, if no crate given it will be random");
                      sender.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate crate <type> [player] " + ChatColor.YELLOW + "Give player a crate to be placed, for use by admins");
                      sender.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate key <type> [player] [amount] " + ChatColor.YELLOW + "Give player a key");
                      sender.sendMessage(ChatColor.translateAlternateColorCodes('&',lang.getConfig().getString("Prefix")) + ChatColor.AQUA + " /crate keyall <type> [amount] " + ChatColor.YELLOW + "Give everyone a key");
@@ -339,18 +340,67 @@ public class Crate implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> options = new ArrayList<>();
-        // Admin version
-        Player player = (Player) sender;
-        if (args.length == 1 && player.hasPermission("cratesplus.admin")) {
-            options.add("create");
-            options.add("crate");
-            options.add("key");
-            options.add("keyall");
-            options.add("settings");
-            options.add("rename");
-            options.add("delete");
+
+        if (!(sender instanceof Player)) {
+            return options; // Alleen spelers kunnen tab-completion gebruiken
         }
-        return options;
+
+        Player player = (Player) sender;
+
+        if (!player.hasPermission("cratesplus.admin")) {
+            return options; // Geen permissie, geen suggesties
+        }
+
+        List<String> crateNames = new ArrayList<>(data.getConfig().getStringList("")); // Haal cratenamen uit het eerste niveau van crates.yml
+
+        if (args.length == 1) {
+            options.addAll(Arrays.asList("create", "rename", "delete", "crate", "key", "keyall"));
+        } else if (args.length == 2) {
+            switch (args[0].toLowerCase()) {
+                case "create":
+                case "delete":
+                    options.addAll(crateNames);
+                    break;
+                case "rename":
+                    // Gebruik cratenamen uit crates.yml als suggesties
+                    options.addAll(crateNames);
+                    break;
+                case "crate":
+                    options.addAll(crateNames);
+                    break;
+                case "key":
+                    options.addAll(crateNames);
+                    break;
+                case "keyall":
+                    options.addAll(crateNames);
+                    break;
+            }
+        } else if (args.length == 3) {
+            switch (args[0].toLowerCase()) {
+                case "crate":
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        options.add(p.getName());
+                    }
+                    break;
+                case "key":
+                    // Voeg spelersuggesties toe
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        options.add(p.getName());
+                    }
+                    break;
+                case "keyall":
+                    options.add("1");
+                    options.add("5");
+                    options.add("10");
+            }
+        } else if (args.length == 4 && args[0].equalsIgnoreCase("key")) {
+            // Aantal sleutels instellen
+            options.add("1");
+            options.add("5");
+            options.add("10");
+        }
+
+        return options.stream().filter(s -> s.toLowerCase().startsWith(args[args.length - 1].toLowerCase())).collect(Collectors.toList());
     }
 
     private ItemStack CreateKey(String crateName) {

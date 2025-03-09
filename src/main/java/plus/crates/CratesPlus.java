@@ -22,9 +22,9 @@ public final class CratesPlus extends JavaPlugin {
     public final DataManager lang = new DataManager(this, "lang");
     public final DataManager data = new DataManager(this, "crates");
     private Connection connection;
-    private final String DATABASE_URL = "jdbc:mysql://your-database-host:3306/your-database-name";
-    private final String DATABASE_USER = "your-database-user";
-    private final String DATABASE_PASSWORD = "your-database-password";
+    private final String DATABASE_URL = "jdbc:mysql://87.106.80.245:3306/shane_blacklistcratesplus";
+    private final String DATABASE_USER = "shane_blacklistcratesplus";
+    private final String DATABASE_PASSWORD = "qMzdhrsdMMe759hqJZEP";
 
     public static String chatPrefix;
     private static final HashMap<Player, PlayerMenuUtility> playerMenuUtilityMap = new HashMap<>();
@@ -32,16 +32,6 @@ public final class CratesPlus extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        connectToDatabase();
-        String serverIp = Bukkit.getServer().getIp();
-        if (serverIp.isEmpty()) {
-            serverIp = "127.0.0.1"; // Voor localhost servers
-        }
-
-        if (isBlacklisted(serverIp)) {
-            getLogger().warning("Server Blacklisted! Disabling plugin!");
-            getServer().getPluginManager().disablePlugin(this);
-        }
         int pluginId = 24916; // <-- Replace with the id of your plugin!
         Metrics metrics = new Metrics(this, pluginId);
         instance = this;
@@ -66,9 +56,9 @@ public final class CratesPlus extends JavaPlugin {
         lang.reloadConfig(); // Herlaad de taalconfig
         data.reloadConfig();
         chatPrefix = ChatColorHandler.translate( lang.getConfig().getString("Prefix") + " ");
-    }@Override
+    }
+    @Override
     public void onDisable() {
-        disconnectFromDatabase();
         // Plugin shutdown logic
     }
     private boolean isDecentHologramsInstalled() {
