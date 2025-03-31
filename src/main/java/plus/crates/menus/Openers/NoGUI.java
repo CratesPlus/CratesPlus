@@ -57,11 +57,11 @@ public class NoGUI {
         player.getInventory().addItem(rowOfItems.get(52));
                 ItemStack wonItem = rowOfItems.get(52);
                 int itemIndex = rowOfItems.indexOf(wonItem);
-                String chatName = ChatName.getChatName(wonItem);
+            String itemNaam = Itemname.formatMaterialName(wonItem.getType());
 
 
                 for (Player player2 : Bukkit.getOnlinePlayers()) {
-                    player2.sendMessage(ChatColor.translateAlternateColorCodes('&', NoGUI.NoGUILang(nogui).getConfig().getString("Prefix") + " " + NoGUI.NoGUILang(nogui).getConfig().getString("Won").replace("%winner%", player.getName()).replace("%item%", chatName).replace("%cratename%",crateName)));
+                    player2.sendMessage(ChatColor.translateAlternateColorCodes('&', NoGUI.NoGUILang(nogui).getConfig().getString("Prefix") + " " + NoGUI.NoGUILang(nogui).getConfig().getString("Won").replace("%winner%", player.getName()).replace("%item%", itemNaam).replace("%cratename%",crateName)));
 
             }
 

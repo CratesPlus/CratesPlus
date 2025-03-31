@@ -1,8 +1,9 @@
 package plus.crates.frameworks;
 
 import org.bukkit.Bukkit;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
@@ -19,12 +20,14 @@ public abstract class Menu implements InventoryHolder {
     protected PlayerMenuUtility playerMenuUtility;
     protected Inventory inventory;
     protected ItemStack FILLER_GLASS = makeItem(Material.GRAY_STAINED_GLASS_PANE, " ");
+    protected Player player;
 
     //Constructor for Menu. Pass in a PlayerMenuUtility so that
     // we have information on who's menu this is and
     // what info is to be transfered
     public Menu(PlayerMenuUtility playerMenuUtility) {
         this.playerMenuUtility = playerMenuUtility;
+        this.player = playerMenuUtility.getOwner();
     }
 
     //let each menu decide their name

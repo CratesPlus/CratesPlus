@@ -1,5 +1,6 @@
 package plus.crates;
 
+import me.kodysimpson.simpapi.menu.MenuManager;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -8,10 +9,11 @@ import plus.crates.Handlers.MenuHandler;
 import plus.crates.Handlers.PlayerHandler;
 import plus.crates.commands.Crate;
 import plus.crates.frameworks.DataManager;
-import plus.crates.frameworks.PlayerMenuUtility;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import plus.crates.frameworks.Logout;
+import plus.crates.frameworks.PlayerMenuUtility;
 import plus.crates.frameworks.Updater;
 
 import java.sql.*;
@@ -44,6 +46,7 @@ public final class CratesPlus extends JavaPlugin {
         new PlayerHandler(this);
         new MenuHandler(this);
         new Crate(this);
+        new Logout(this);
         checkUpdate();
     }
     public static CratesPlus getInstance() {
@@ -72,14 +75,7 @@ public final class CratesPlus extends JavaPlugin {
         });
 
     }
-    private void connectToDatabase() {
-        try {
-            connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD);
-        } catch (SQLException e) {
-            getLogger().severe("Error when enabling plugin. Please contact support");
-            getServer().getPluginManager().disablePlugin(this);
-        }
-    }
+
 
     private void disconnectFromDatabase() {
         if (connection != null) {
@@ -108,16 +104,10 @@ public final class CratesPlus extends JavaPlugin {
         return false;
     }
     public static PlayerMenuUtility getPlayerMenuUtility(Player p) {
-        PlayerMenuUtility playerMenuUtility;
-        if (!(playerMenuUtilityMap.containsKey(p))) { //See if the player has a player menu utility "saved" for them
+        return playerMenuUtilityMap.computeIfAbsent(p, PlayerMenuUtility::new);
 
-            //This player doesn't. Make one for them add it to the hashmap
-            playerMenuUtility = new PlayerMenuUtility(p);
-            playerMenuUtilityMap.put(p, playerMenuUtility);
-
-            return playerMenuUtility;
-        } else {
-            return playerMenuUtilityMap.get(p); //Return the object by using the provided player
-        }
+    }
+    public static PlayerMenuUtility removePlayerMenuUtility(Player player) {
+        return playerMenuUtilityMap.remove(player);
     }
 }

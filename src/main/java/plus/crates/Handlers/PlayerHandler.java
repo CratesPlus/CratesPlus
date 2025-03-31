@@ -102,7 +102,6 @@ public class PlayerHandler implements Listener {
                             event.setCancelled(true);
                         } else {
                             DecentHologramMaker.remove(crateLoc);
-                            event.setCancelled(false);
                         }
                     } else {
                         event.setCancelled(true);

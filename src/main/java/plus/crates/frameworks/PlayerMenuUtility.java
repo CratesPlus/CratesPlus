@@ -1,6 +1,8 @@
 package plus.crates.frameworks;
 
 import org.bukkit.entity.Player;
+import java.util.HashMap;
+import java.util.Stack;
 
 /*
 Companion class to all menus. This is needed to pass information across the entire
@@ -11,7 +13,8 @@ Companion class to all menus. This is needed to pass information across the enti
 
 public class PlayerMenuUtility {
 
-    private Player owner;
+    private final Player owner;
+
     //store the player that will be killed, so we can access him in the next menu
 
 

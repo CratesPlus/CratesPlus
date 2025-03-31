@@ -1,17 +1,11 @@
 package plus.crates.menus;
 
-import net.kyori.adventure.platform.facet.Facet;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
 import org.lushplugins.chatcolorhandler.ChatColorHandler;
 import plus.crates.CratesPlus;
-import plus.crates.frameworks.ChatName;
 import plus.crates.frameworks.DataManager;
 import plus.crates.frameworks.Menu;
 import plus.crates.frameworks.PlayerMenuUtility;
-import org.bukkit.ChatColor;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
@@ -63,7 +57,6 @@ public class CrateWinnings extends Menu {
             ItemStack item = inventory.getItem(i);
             if (item != null) {
                 // Ensure the chatName is stored before saving
-                item = ChatName.setChatName(item, ChatName.getChatName(item));
                 items.add(item);
             }
         }

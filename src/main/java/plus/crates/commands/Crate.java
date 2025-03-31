@@ -54,8 +54,12 @@ public class Crate implements CommandExecutor, TabCompleter {
                  if (args.length > 0) {
                      if(args[0].equalsIgnoreCase("preview")) {
                          String crateName = args[1];
-                         new CratePreview(CratesPlus.getPlayerMenuUtility((Player) sender),plugin,crateName).open();
-                     }
+                         if(crateName.isEmpty()) {
+                             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',CratesPlus.chatPrefix + ChatColor.RED + lang.getConfig().getString("ArgumentRequired") + ChatColor.RESET + " /crate preview <cratename>"));
+                         } else {
+                             new CratePreview(CratesPlus.getPlayerMenuUtility((Player) sender), plugin, crateName).open();
+                         }
+                         }
                      else if (args[0].equalsIgnoreCase("create")) {
                          if (args.length > 1) {
                              String crateName = args[1];

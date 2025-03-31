@@ -1,13 +1,13 @@
 package plus.crates.Handlers;
 
 import plus.crates.CratesPlus;
-import plus.crates.frameworks.Menu;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.InventoryHolder;
+import plus.crates.frameworks.Menu;
 
 public class MenuHandler implements Listener {
     public MenuHandler(CratesPlus plugin) {
